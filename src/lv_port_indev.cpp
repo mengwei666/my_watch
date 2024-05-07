@@ -13,6 +13,8 @@
 #include "lvgl.h"
 #include <Arduino.h>
 
+#include "HAL.h"
+
 /*********************
  *      DEFINES
  *********************/
@@ -170,6 +172,19 @@ void lv_port_indev_init(void)
     //     {40, 100},  /*Button 1 -> x:40; y:100*/
     // };
     // lv_indev_set_button_points(indev_button, btn_points);
+    // lv_ui *ui;
+    // extern lv_indev_t * indev_encoder;
+	// lv_group_t *group=lv_group_create();
+    // lv_indev_set_group(indev_encoder, group);	//将组绑定到输入设备
+
+    // lv_group_set_editing(group, false);   //导航模式
+	// lv_group_add_obj(group ,ui->screen_btn_1);
+
+    // lv_group_set_editing(group, false);   //导航模式
+	// lv_group_add_obj(group ,ui->screen_1_btn_1);
+
+    // lv_group_set_editing(group, false);   //导航模式
+	// lv_group_add_obj(group ,ui->screen_2_btn_1);
 }
 
 /**********************
@@ -334,6 +349,8 @@ static void encoder_init(void)
     /*Your code comes here*/
 }
 
+// 在全局范围内声明一个变量来存储当前焦点对象
+
 /*Will be called by the library to read the encoder*/
 static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
@@ -341,16 +358,25 @@ static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
         encoder_state = LV_INDEV_STATE_PR;   //按下
     else
         encoder_state = LV_INDEV_STATE_REL;  //松开
-    data->enc_diff = encoder_diff;
+    data->enc_diff = HAL::Encoder_GetDiff();
     data->state = encoder_state;
+
+    lv_indev_t *current_focused_obj = NULL;
+    if (data->enc_diff  != 0)
+    {
+        Serial.println("data->enc_diff");
+        Serial.print(data->enc_diff);
+    }
+    encoder_diff = 0;
+
 }
 
 /*Call this function in an interrupt to process encoder events (turn, press)*/
-static void encoder_handler(void)
-{
-    encoder_diff += 0;
-    encoder_state = LV_INDEV_STATE_REL;
-}
+// static void encoder_handler(void)
+// {
+//     encoder_diff += 0;
+//     encoder_state = LV_INDEV_STATE_REL;
+// }
 
 /*------------------
  * Button

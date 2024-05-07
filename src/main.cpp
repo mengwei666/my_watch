@@ -16,47 +16,20 @@
 #include "custom/gui_guider.h"
 #include "custom/custom.h"
 
+#include "HAL.h"
+
 typedef TFT_eSPI SCREEN_CLASS;
 #define CONFIG_SCREEN_BLK_PIN   12
 
 lv_ui guider_ui;
 
-/* Power */
-#define CONFIG_POWER_EN_PIN         21
-/* Battery */
-#define CONFIG_BAT_DET_PIN          37
-#define CONFIG_BAT_CHG_DET_PIN      38
-
-void Encoder_Init(void)
-{
-    pinMode(CONFIG_ENCODER_A_PIN, INPUT_PULLUP);
-    pinMode(CONFIG_ENCODER_B_PIN, INPUT_PULLUP);
-    pinMode(CONFIG_ENCODER_PUSH_PIN, INPUT_PULLUP);
-}
-
-
-void Power_Init()
-{
-    pinMode(CONFIG_BAT_CHG_DET_PIN, INPUT); // 电源充电管理引脚
-
-    /*电源使能保持*/
-    Serial.println("Power: Waiting...");
-    pinMode(CONFIG_POWER_EN_PIN, OUTPUT); 
-    digitalWrite(CONFIG_POWER_EN_PIN, LOW);
-
-    digitalWrite(CONFIG_POWER_EN_PIN, HIGH);
-    Serial.println("Power: ON");
-
-}
 
 void setup() 
 {
   Serial.begin(115200);
   Serial.println("Begin");
 
-  Power_Init();
-  Encoder_Init();
-
+  HAL::Init();
   /* 屏幕背光打开设置 */
   pinMode(CONFIG_SCREEN_BLK_PIN, OUTPUT);
   digitalWrite(CONFIG_SCREEN_BLK_PIN, HIGH);
@@ -80,4 +53,5 @@ void loop()
 {
   lv_tick_inc(5); 
  	lv_task_handler();
+  // Encoder_Update();
 }

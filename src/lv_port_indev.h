@@ -18,13 +18,9 @@ extern "C" {
  *      INCLUDES
  *********************/
 #include "lvgl.h"
+// #include "HAL.h"
 
 
-
-/* Encoder */
-#define CONFIG_ENCODER_B_PIN        34
-#define CONFIG_ENCODER_A_PIN        35
-#define CONFIG_ENCODER_PUSH_PIN     27
 /*********************
  *      DEFINES
  *********************/

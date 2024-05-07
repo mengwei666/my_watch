@@ -65,7 +65,6 @@ void setup_scr_screen_2(lv_ui *ui)
 	extern lv_indev_t * indev_encoder;
 	lv_group_t *group=lv_group_create();
     lv_indev_set_group(indev_encoder, group);	//将组绑定到输入设备
-
     lv_group_set_editing(group, false);   //导航模式
 	lv_group_add_obj(group ,ui->screen_2_btn_1);
 
