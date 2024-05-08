@@ -19,7 +19,8 @@ extern "C" {
  *********************/
 #include "lvgl.h"
 // #include "HAL.h"
-
+// extern lv_group_t *my_group;
+// extern lv_group_t *group;
 
 /*********************
  *      DEFINES

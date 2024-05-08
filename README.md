@@ -123,3 +123,16 @@ git branch -M main
 git remote add origin https://github.com/mengwei666/my_watch.git
 git push -u origin main
 ```
+
+# 2024-5-8
+
+调试编码器旋转切换按键，测试好久都没有反应。偶然间按键按下后旋转编码器可以切换按钮了，这个坑是没有好好弄明白lvgl是怎样工作的，长教训
+修改：lv_port_indev.cpp 按键按下的状态
+
+if(digitalRead(CONFIG_ENCODER_PUSH_PIN))  //按下动作和按下状态都算按下
+
+encoder_state = LV_INDEV_STATE_REL;  //松开
+
+else
+
+encoder_state = LV_INDEV_STATE_PR;   //按下

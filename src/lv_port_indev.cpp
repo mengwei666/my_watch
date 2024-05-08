@@ -350,24 +350,36 @@ static void encoder_init(void)
 }
 
 // 在全局范围内声明一个变量来存储当前焦点对象
+//   lv_group_t *my_group;
+// lv_group_t *group=lv_group_create();
 
 /*Will be called by the library to read the encoder*/
 static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     if(digitalRead(CONFIG_ENCODER_PUSH_PIN))  //按下动作和按下状态都算按下
-        encoder_state = LV_INDEV_STATE_PR;   //按下
-    else
         encoder_state = LV_INDEV_STATE_REL;  //松开
+
+    else
+        encoder_state = LV_INDEV_STATE_PR;   //按下
     data->enc_diff = HAL::Encoder_GetDiff();
     data->state = encoder_state;
 
-    lv_indev_t *current_focused_obj = NULL;
+
+
     if (data->enc_diff  != 0)
     {
+        if (data->enc_diff > 0) {
+            // 向前旋转，将焦点移到下一个按钮
+            // lv_group_focus_next(group);
+        } else {
+            // 向后旋转，将焦点移到上一个按钮
+            // lv_group_focus_prev(group);
+        }
+        // lv_group_focus_prev(current_focused_obj); // 聚焦上一个对象
         Serial.println("data->enc_diff");
         Serial.print(data->enc_diff);
     }
-    encoder_diff = 0;
+    // encoder_diff = 0;
 
 }
 

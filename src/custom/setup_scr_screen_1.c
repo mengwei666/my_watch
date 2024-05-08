@@ -14,7 +14,7 @@
 #include "widgets_init.h"
 #include "custom.h"
 
-
+#include "lv_port_indev.h"
 
 void setup_scr_screen_1(lv_ui *ui)
 {

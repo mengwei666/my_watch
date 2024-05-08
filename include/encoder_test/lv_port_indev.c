@@ -13,6 +13,8 @@
 #include "lvgl.h"
 #include <Arduino.h>
 
+#include "HAL.h"
+
 /*********************
  *      DEFINES
  *********************/
@@ -341,13 +343,13 @@ static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     // Serial.print("PUSH_PIN: ");
     // Serial.println( digitalRead(CONFIG_ENCODER_PUSH_PIN));
-    if(digitalRead(CONFIG_ENCODER_PUSH_PIN))  //按下动作和按下状态都算按下
-        encoder_state = LV_INDEV_STATE_PR;   //按下
-    else
-        encoder_state = LV_INDEV_STATE_REL;  //松开
+    // if(digitalRead(CONFIG_ENCODER_PUSH_PIN))  //按下动作和按下状态都算按下
+    //     encoder_state = LV_INDEV_STATE_PR;   //按下
+    // else
+    //     encoder_state = LV_INDEV_STATE_REL;  //松开
 
-    data->enc_diff = encoder_diff;
-    data->state = encoder_state;
+    // data->enc_diff = HAL::Encoder_GetDiff();
+    // data->state = encoder_state;
 }
 
 /*Call this function in an interrupt to process encoder events (turn, press)*/
