@@ -14,7 +14,7 @@
 #include "widgets_init.h"
 #include "custom.h"
 
-#include "lv_port_indev.h"
+
 
 void setup_scr_screen_1(lv_ui *ui)
 {
@@ -25,44 +25,23 @@ void setup_scr_screen_1(lv_ui *ui)
 
 	//Write style for screen_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write codes screen_1_img_1
-	ui->screen_1_img_1 = lv_img_create(ui->screen_1);
-	lv_obj_add_flag(ui->screen_1_img_1, LV_OBJ_FLAG_CLICKABLE);
-	lv_img_set_pivot(ui->screen_1_img_1, 50,50);
-	lv_img_set_angle(ui->screen_1_img_1, 0);
-	lv_obj_set_pos(ui->screen_1_img_1, 70, 70);
-	lv_obj_set_size(ui->screen_1_img_1, 100, 100);
-
-	//Write style for screen_1_img_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_img_opa(ui->screen_1_img_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write codes screen_1_img_2
-	ui->screen_1_img_2 = lv_img_create(ui->screen_1);
-	lv_obj_add_flag(ui->screen_1_img_2, LV_OBJ_FLAG_CLICKABLE);
-	lv_img_set_src(ui->screen_1_img_2, &_8_alpha_240x240);
-	lv_img_set_pivot(ui->screen_1_img_2, 50,50);
-	lv_img_set_angle(ui->screen_1_img_2, 0);
-	lv_obj_set_pos(ui->screen_1_img_2, 0, 0);
-	lv_obj_set_size(ui->screen_1_img_2, 240, 240);
-
-	//Write style for screen_1_img_2, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_img_opa(ui->screen_1_img_2, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_img_src(ui->screen_1, &_6_240x240, LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_img_opa(ui->screen_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
 
 	//Write codes screen_1_btn_1
 	ui->screen_1_btn_1 = lv_btn_create(ui->screen_1);
 	ui->screen_1_btn_1_label = lv_label_create(ui->screen_1_btn_1);
-	lv_label_set_text(ui->screen_1_btn_1_label, "Button2");
+	lv_label_set_text(ui->screen_1_btn_1_label, "");
 	lv_label_set_long_mode(ui->screen_1_btn_1_label, LV_LABEL_LONG_WRAP);
 	lv_obj_align(ui->screen_1_btn_1_label, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_style_pad_all(ui->screen_1_btn_1, 0, LV_STATE_DEFAULT);
 	lv_obj_set_width(ui->screen_1_btn_1_label, LV_PCT(100));
-	lv_obj_set_pos(ui->screen_1_btn_1, 69, 218);
-	lv_obj_set_size(ui->screen_1_btn_1, 102, 22);
+	lv_obj_set_pos(ui->screen_1_btn_1, 209, 213);
+	lv_obj_set_size(ui->screen_1_btn_1, 16, 15);
 
 	//Write style for screen_1_btn_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_1_btn_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_1_btn_1, lv_color_hex(0x2195f6), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_color(ui->screen_1_btn_1, lv_color_hex(0xf00000), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_bg_grad_dir(ui->screen_1_btn_1, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_border_width(ui->screen_1_btn_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_radius(ui->screen_1_btn_1, 5, LV_PART_MAIN|LV_STATE_DEFAULT);

@@ -52,7 +52,7 @@ __attribute__((unused)) void ta_event_cb (lv_event_t *e) {
     }
 }
 
-#if LV_USE_ANALOGCLOCK != 0
+#if LV_USE_ANALOGCLOCK != 1
 void clock_count(int *hour, int *min, int *sec)
 {
     (*sec)++;
@@ -75,4 +75,18 @@ void clock_count(int *hour, int *min, int *sec)
 }
 #endif
 
+
+
+extern int screen_analog_clock_1_hour_value;
+extern int screen_analog_clock_1_min_value;
+extern int screen_analog_clock_1_sec_value;
+
+void screen_analog_clock_1_timer(lv_timer_t *timer)
+{
+    clock_count(&screen_analog_clock_1_hour_value, &screen_analog_clock_1_min_value, &screen_analog_clock_1_sec_value);
+    if (lv_obj_is_valid(guider_ui.screen_analog_clock_1))
+    {
+      lv_analogclock_set_time(guider_ui.screen_analog_clock_1, screen_analog_clock_1_hour_value, screen_analog_clock_1_min_value, screen_analog_clock_1_sec_value);
+    }
+}
 

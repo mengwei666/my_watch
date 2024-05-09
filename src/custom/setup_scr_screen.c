@@ -14,10 +14,11 @@
 #include "widgets_init.h"
 #include "custom.h"
 
-#include "lv_port_indev.h"
 
 
-
+int screen_analog_clock_1_hour_value = 3;
+int screen_analog_clock_1_min_value = 20;
+int screen_analog_clock_1_sec_value = 50;
 void setup_scr_screen(lv_ui *ui)
 {
 	//Write codes screen
@@ -28,32 +29,55 @@ void setup_scr_screen(lv_ui *ui)
 	//Write style for screen, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 
-	//Write codes screen_img_1
-	ui->screen_img_1 = lv_img_create(ui->screen);
-	lv_obj_add_flag(ui->screen_img_1, LV_OBJ_FLAG_CLICKABLE);
-	lv_img_set_src(ui->screen_img_1, &_6_alpha_240x240);
-	lv_img_set_pivot(ui->screen_img_1, 50,50);
-	lv_img_set_angle(ui->screen_img_1, 0);
-	lv_obj_set_pos(ui->screen_img_1, 0, 0);
-	lv_obj_set_size(ui->screen_img_1, 240, 240);
+	//Write codes screen_analog_clock_1
+	static bool screen_analog_clock_1_timer_enabled = false;
+	ui->screen_analog_clock_1 = lv_analogclock_create(ui->screen);
+	lv_analogclock_hide_digits(ui->screen_analog_clock_1, false);
+	lv_analogclock_set_major_ticks(ui->screen_analog_clock_1, 2, 10, lv_color_hex(0x555555), 10);
+	lv_analogclock_set_ticks(ui->screen_analog_clock_1, 2, 5, lv_color_hex(0x333333));
+	lv_analogclock_set_hour_needle_line(ui->screen_analog_clock_1, 2, lv_color_hex(0x00ff00), -40);
+	lv_analogclock_set_min_needle_line(ui->screen_analog_clock_1, 2, lv_color_hex(0xE1FF00), -30);
+	lv_analogclock_set_sec_needle_line(ui->screen_analog_clock_1, 2, lv_color_hex(0x6600FF), -10);
+	lv_analogclock_set_time(ui->screen_analog_clock_1, screen_analog_clock_1_hour_value, screen_analog_clock_1_min_value,screen_analog_clock_1_sec_value);
+	// create timer
+	if (!screen_analog_clock_1_timer_enabled) {
+		lv_timer_create(screen_analog_clock_1_timer, 1000, NULL);
+		screen_analog_clock_1_timer_enabled = true;
+	}
+	lv_obj_set_pos(ui->screen_analog_clock_1, 10, 10);
+	lv_obj_set_size(ui->screen_analog_clock_1, 220, 220);
 
-	//Write style for screen_img_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_img_opa(ui->screen_img_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
+	//Write style for screen_analog_clock_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
+	lv_obj_set_style_bg_opa(ui->screen_analog_clock_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_color(ui->screen_analog_clock_1, lv_color_hex(0xffffff), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_grad_dir(ui->screen_analog_clock_1, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_border_width(ui->screen_analog_clock_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_shadow_width(ui->screen_analog_clock_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
+
+	//Write style for screen_analog_clock_1, Part: LV_PART_TICKS, State: LV_STATE_DEFAULT.
+	lv_obj_set_style_text_color(ui->screen_analog_clock_1, lv_color_hex(0xff0000), LV_PART_TICKS|LV_STATE_DEFAULT);
+	lv_obj_set_style_text_font(ui->screen_analog_clock_1, &lv_font_montserratMedium_12, LV_PART_TICKS|LV_STATE_DEFAULT);
+	lv_obj_set_style_text_opa(ui->screen_analog_clock_1, 255, LV_PART_TICKS|LV_STATE_DEFAULT);
+
+	//Write style for screen_analog_clock_1, Part: LV_PART_INDICATOR, State: LV_STATE_DEFAULT.
+	lv_obj_set_style_bg_opa(ui->screen_analog_clock_1, 255, LV_PART_INDICATOR|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_color(ui->screen_analog_clock_1, lv_color_hex(0x000000), LV_PART_INDICATOR|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_grad_dir(ui->screen_analog_clock_1, LV_GRAD_DIR_NONE, LV_PART_INDICATOR|LV_STATE_DEFAULT);
 
 	//Write codes screen_btn_1
 	ui->screen_btn_1 = lv_btn_create(ui->screen);
 	ui->screen_btn_1_label = lv_label_create(ui->screen_btn_1);
-	lv_label_set_text(ui->screen_btn_1_label, "Button3");
+	lv_label_set_text(ui->screen_btn_1_label, "");
 	lv_label_set_long_mode(ui->screen_btn_1_label, LV_LABEL_LONG_WRAP);
 	lv_obj_align(ui->screen_btn_1_label, LV_ALIGN_CENTER, 0, 0);
 	lv_obj_set_style_pad_all(ui->screen_btn_1, 0, LV_STATE_DEFAULT);
 	lv_obj_set_width(ui->screen_btn_1_label, LV_PCT(100));
-	lv_obj_set_pos(ui->screen_btn_1, 125, 98);
-	lv_obj_set_size(ui->screen_btn_1, 82, 23);
+	lv_obj_set_pos(ui->screen_btn_1, 209, 213);
+	lv_obj_set_size(ui->screen_btn_1, 16, 15);
 
 	//Write style for screen_btn_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
 	lv_obj_set_style_bg_opa(ui->screen_btn_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_btn_1, lv_color_hex(0x2195f6), LV_PART_MAIN|LV_STATE_DEFAULT);
+	lv_obj_set_style_bg_color(ui->screen_btn_1, lv_color_hex(0xf00000), LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_bg_grad_dir(ui->screen_btn_1, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_border_width(ui->screen_btn_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_radius(ui->screen_btn_1, 5, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -63,172 +87,14 @@ void setup_scr_screen(lv_ui *ui)
 	lv_obj_set_style_text_opa(ui->screen_btn_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
 	lv_obj_set_style_text_align(ui->screen_btn_1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN|LV_STATE_DEFAULT);
 
-	//Write codes screen_btn_2
-	ui->screen_btn_2 = lv_btn_create(ui->screen);
-	ui->screen_btn_2_label = lv_label_create(ui->screen_btn_2);
-	lv_label_set_text(ui->screen_btn_2_label, "Button2");
-	lv_label_set_long_mode(ui->screen_btn_2_label, LV_LABEL_LONG_WRAP);
-	lv_obj_align(ui->screen_btn_2_label, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_set_style_pad_all(ui->screen_btn_2, 0, LV_STATE_DEFAULT);
-	lv_obj_set_width(ui->screen_btn_2_label, LV_PCT(100));
-	lv_obj_set_pos(ui->screen_btn_2, 15, 71);
-	lv_obj_set_size(ui->screen_btn_2, 100, 50);
-
-	//Write style for screen_btn_2, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_btn_2, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_btn_2, lv_color_hex(0x2195f6), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_btn_2, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width(ui->screen_btn_2, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_btn_2, 5, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_shadow_width(ui->screen_btn_2, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_color(ui->screen_btn_2, lv_color_hex(0xffffff), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_font(ui->screen_btn_2, &lv_font_montserratMedium_16, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_opa(ui->screen_btn_2, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_align(ui->screen_btn_2, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write codes screen_btn_3
-	ui->screen_btn_3 = lv_btn_create(ui->screen);
-	ui->screen_btn_3_label = lv_label_create(ui->screen_btn_3);
-	lv_label_set_text(ui->screen_btn_3_label, "Button1");
-	lv_label_set_long_mode(ui->screen_btn_3_label, LV_LABEL_LONG_WRAP);
-	lv_obj_align(ui->screen_btn_3_label, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_set_style_pad_all(ui->screen_btn_3, 0, LV_STATE_DEFAULT);
-	lv_obj_set_width(ui->screen_btn_3_label, LV_PCT(100));
-	lv_obj_set_pos(ui->screen_btn_3, 15, 176);
-	lv_obj_set_size(ui->screen_btn_3, 100, 50);
-
-	//Write style for screen_btn_3, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_btn_3, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_btn_3, lv_color_hex(0x2195f6), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_btn_3, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width(ui->screen_btn_3, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_btn_3, 5, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_shadow_width(ui->screen_btn_3, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_color(ui->screen_btn_3, lv_color_hex(0xffffff), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_font(ui->screen_btn_3, &lv_font_montserratMedium_16, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_opa(ui->screen_btn_3, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_text_align(ui->screen_btn_3, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write codes screen_sw_1
-	ui->screen_sw_1 = lv_switch_create(ui->screen);
-	lv_obj_set_pos(ui->screen_sw_1, 152, 196);
-	lv_obj_set_size(ui->screen_sw_1, 40, 20);
-
-	//Write style for screen_sw_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_sw_1, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_sw_1, lv_color_hex(0xe6e2e6), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_sw_1, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width(ui->screen_sw_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_sw_1, 10, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_shadow_width(ui->screen_sw_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write style for screen_sw_1, Part: LV_PART_INDICATOR, State: LV_STATE_CHECKED.
-	lv_obj_set_style_bg_opa(ui->screen_sw_1, 255, LV_PART_INDICATOR|LV_STATE_CHECKED);
-	lv_obj_set_style_bg_color(ui->screen_sw_1, lv_color_hex(0x2195f6), LV_PART_INDICATOR|LV_STATE_CHECKED);
-	lv_obj_set_style_bg_grad_dir(ui->screen_sw_1, LV_GRAD_DIR_NONE, LV_PART_INDICATOR|LV_STATE_CHECKED);
-	lv_obj_set_style_border_width(ui->screen_sw_1, 0, LV_PART_INDICATOR|LV_STATE_CHECKED);
-
-	//Write style for screen_sw_1, Part: LV_PART_KNOB, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_sw_1, 255, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_sw_1, lv_color_hex(0xffffff), LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_sw_1, LV_GRAD_DIR_NONE, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width(ui->screen_sw_1, 0, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_sw_1, 10, LV_PART_KNOB|LV_STATE_DEFAULT);
-
-	//Write codes screen_sw_2
-	ui->screen_sw_2 = lv_switch_create(ui->screen);
-	lv_obj_set_pos(ui->screen_sw_2, 152, 21);
-	lv_obj_set_size(ui->screen_sw_2, 40, 20);
-
-	//Write style for screen_sw_2, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_sw_2, 255, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_sw_2, lv_color_hex(0xe6e2e6), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_sw_2, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width(ui->screen_sw_2, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_sw_2, 10, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_shadow_width(ui->screen_sw_2, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write style for screen_sw_2, Part: LV_PART_INDICATOR, State: LV_STATE_CHECKED.
-	lv_obj_set_style_bg_opa(ui->screen_sw_2, 255, LV_PART_INDICATOR|LV_STATE_CHECKED);
-	lv_obj_set_style_bg_color(ui->screen_sw_2, lv_color_hex(0x2195f6), LV_PART_INDICATOR|LV_STATE_CHECKED);
-	lv_obj_set_style_bg_grad_dir(ui->screen_sw_2, LV_GRAD_DIR_NONE, LV_PART_INDICATOR|LV_STATE_CHECKED);
-	lv_obj_set_style_border_width(ui->screen_sw_2, 0, LV_PART_INDICATOR|LV_STATE_CHECKED);
-
-	//Write style for screen_sw_2, Part: LV_PART_KNOB, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_sw_2, 255, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_sw_2, lv_color_hex(0xffffff), LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_sw_2, LV_GRAD_DIR_NONE, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_border_width(ui->screen_sw_2, 0, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_sw_2, 10, LV_PART_KNOB|LV_STATE_DEFAULT);
-
-	//Write codes screen_slider_1
-	ui->screen_slider_1 = lv_slider_create(ui->screen);
-	lv_slider_set_range(ui->screen_slider_1, 0, 100);
-	lv_slider_set_mode(ui->screen_slider_1, LV_SLIDER_MODE_NORMAL);
-	lv_slider_set_value(ui->screen_slider_1, 50, LV_ANIM_OFF);
-	lv_obj_set_pos(ui->screen_slider_1, 38, 145);
-	lv_obj_set_size(ui->screen_slider_1, 160, 8);
-
-	//Write style for screen_slider_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_slider_1, 60, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_slider_1, lv_color_hex(0x2195f6), LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_slider_1, LV_GRAD_DIR_NONE, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_slider_1, 50, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_outline_width(ui->screen_slider_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-	lv_obj_set_style_shadow_width(ui->screen_slider_1, 0, LV_PART_MAIN|LV_STATE_DEFAULT);
-
-	//Write style for screen_slider_1, Part: LV_PART_INDICATOR, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_slider_1, 255, LV_PART_INDICATOR|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_slider_1, lv_color_hex(0x2195f6), LV_PART_INDICATOR|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_slider_1, LV_GRAD_DIR_NONE, LV_PART_INDICATOR|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_slider_1, 50, LV_PART_INDICATOR|LV_STATE_DEFAULT);
-
-	//Write style for screen_slider_1, Part: LV_PART_KNOB, State: LV_STATE_DEFAULT.
-	lv_obj_set_style_bg_opa(ui->screen_slider_1, 255, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_color(ui->screen_slider_1, lv_color_hex(0x2195f6), LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_bg_grad_dir(ui->screen_slider_1, LV_GRAD_DIR_NONE, LV_PART_KNOB|LV_STATE_DEFAULT);
-	lv_obj_set_style_radius(ui->screen_slider_1, 50, LV_PART_KNOB|LV_STATE_DEFAULT);
-
-
-
-
-
 	//The custom code of screen.
 	extern lv_indev_t * indev_encoder;
 	lv_group_t *group=lv_group_create();
     lv_indev_set_group(indev_encoder, group);	//将组绑定到输入设备
     lv_group_set_editing(group, false);   //导航模式
-	// lv_group_add_obj(group ,ui->screen_1_btn_1);
 	lv_group_add_obj(group ,ui->screen_btn_1);
-	lv_group_add_obj(group ,ui->screen_btn_2);
-	lv_group_add_obj(group ,ui->screen_btn_3);
-	lv_group_add_obj(group ,ui->screen_sw_1);
-	lv_group_add_obj(group ,ui->screen_sw_2);
-	lv_group_add_obj(group ,ui->screen_slider_1);
-
-
-	// extern lv_indev_t * indev_encoder;
-
-	// lv_group_t * group=lv_group_create();
-
-	// lv_group_set_default(group); 
-	// lv_indev_set_group(indev_encoder, group);	//将组绑定到输入设备
-	// // lv_group_set_editing(group, false);   //导航模式
-	// // lv_group_add_obj(group ,ui->screen_btn_1);
-	// lv_group_add_obj(group ,ui->screen_btn_3);
-	// lv_group_add_obj(group ,ui->screen_btn_2);
-	// lv_group_add_obj(group ,ui->screen_sw_1);
-	// lv_group_add_obj(group ,ui->screen_sw_2);
-	// lv_group_add_obj(group ,ui->screen_slider_1);
-
-	    // 更新焦点对象为你希望的初始焦点对象
-    // // my_group = ui->screen_btn_1;
-	// lv_indev_set_group(indev_encoder, my_group);	//将组绑定到输入设备
-	// lv_group_add_obj(my_group ,ui->screen_btn_3);
-	// lv_group_add_obj(my_group ,ui->screen_btn_2);
-	// lv_group_add_obj(my_group ,ui->screen_sw_1);
-	// lv_group_add_obj(my_group ,ui->screen_sw_2);
-	// lv_group_add_obj(my_group ,ui->screen_slider_1);
+	lv_group_add_obj(group ,ui->screen_analog_clock_1);
+	
 
 	//Update current screen layout.
 	lv_obj_update_layout(ui->screen);

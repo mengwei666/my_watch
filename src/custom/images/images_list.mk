@@ -1,1 +1,1 @@
-GEN_CSRCS += _6_alpha_240x240.c _8_alpha_240x240.c _9_alpha_240x240.c
+GEN_CSRCS += _6_240x240.c _8_240x240.c

@@ -20,27 +20,30 @@ typedef struct
   
 	lv_obj_t *screen;
 	bool screen_del;
-	lv_obj_t *screen_img_1;
+	lv_obj_t *screen_analog_clock_1;
 	lv_obj_t *screen_btn_1;
 	lv_obj_t *screen_btn_1_label;
-	lv_obj_t *screen_btn_2;
-	lv_obj_t *screen_btn_2_label;
-	lv_obj_t *screen_btn_3;
-	lv_obj_t *screen_btn_3_label;
-	lv_obj_t *screen_sw_1;
-	lv_obj_t *screen_sw_2;
-	lv_obj_t *screen_slider_1;
 	lv_obj_t *screen_1;
 	bool screen_1_del;
-	lv_obj_t *screen_1_img_1;
-	lv_obj_t *screen_1_img_2;
 	lv_obj_t *screen_1_btn_1;
 	lv_obj_t *screen_1_btn_1_label;
 	lv_obj_t *screen_2;
 	bool screen_2_del;
-	lv_obj_t *screen_2_img_1;
 	lv_obj_t *screen_2_btn_1;
 	lv_obj_t *screen_2_btn_1_label;
+	lv_obj_t *screen_3;
+	bool screen_3_del;
+	lv_obj_t *screen_3_slider_1;
+	lv_obj_t *screen_3_label_1;
+	lv_obj_t *screen_3_btn_1;
+	lv_obj_t *screen_3_btn_1_label;
+	lv_obj_t *screen_3_cb_1;
+	lv_obj_t *screen_3_sw_1;
+	lv_obj_t *screen_3_ta_1;
+	lv_obj_t *screen_3_roller_1;
+	lv_obj_t *screen_3_bar_1;
+	lv_obj_t *screen_3_btn_2;
+	lv_obj_t *screen_3_btn_2_label;
 }lv_ui;
 
 typedef void (*ui_setup_scr_t)(lv_ui * ui);
@@ -77,12 +80,15 @@ extern lv_ui guider_ui;
 void setup_scr_screen(lv_ui *ui);
 void setup_scr_screen_1(lv_ui *ui);
 void setup_scr_screen_2(lv_ui *ui);
-LV_IMG_DECLARE(_6_alpha_240x240);
-LV_IMG_DECLARE(_8_alpha_240x240);
-LV_IMG_DECLARE(_9_alpha_240x240);
+void setup_scr_screen_3(lv_ui *ui);
 
-LV_FONT_DECLARE(lv_font_montserratMedium_16)
+LV_IMG_DECLARE(_6_240x240);
+
+LV_IMG_DECLARE(_8_240x240);
+
 LV_FONT_DECLARE(lv_font_montserratMedium_12)
+LV_FONT_DECLARE(lv_font_montserratMedium_16)
+LV_FONT_DECLARE(lv_font_SourceHanSerifSC_Regular_16)
 
 
 #ifdef __cplusplus
