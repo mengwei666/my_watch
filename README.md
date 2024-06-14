@@ -145,3 +145,5 @@ encoder_state = LV_INDEV_STATE_PR;   //按下
 # 2024-6-14
 
 使用开发板：ESP32_PICO_KIT_V4.1 (主控芯片：esp32-pico-d4)加串口方式烧录
+
+按下boot（IO0）键并保持，同时按一下EN键（EN）进入烧录模式
