@@ -141,3 +141,7 @@ encoder_state = LV_INDEV_STATE_PR;   //按下
 
 添加模拟时钟：在上位机上设计好后要 添加lv_analogclock.c lv_analogclock.h 才可以编译成功，
 显示字体汉字：在上位机设计时 文本字体那行选择 sourceHans---
+
+# 2024-6-14
+
+使用开发板：ESP32_PICO_KIT_V4.1 (主控芯片：esp32-pico-d4)加串口方式烧录
